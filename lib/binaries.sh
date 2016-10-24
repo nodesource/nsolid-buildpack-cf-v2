@@ -33,6 +33,9 @@ install_nodejs() {
   rm -rf $dir/*
   mv /tmp/node-v$resolved_version-$os-$cpu/* $dir
   chmod +x $dir/bin/*
+
+  # install N|Solid via function added in lib/vendor/nsolid/install.sh
+  install_nsolid $resolved_version $dir/../nsolid
 }
 
 install_iojs() {

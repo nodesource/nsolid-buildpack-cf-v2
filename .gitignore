@@ -4,4 +4,5 @@
 tmp
 log/
 /nodejs_buildpack-*.zip
+/nsolid_buildpack-*.zip
 .bundle
