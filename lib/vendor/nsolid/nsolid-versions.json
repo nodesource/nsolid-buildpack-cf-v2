@@ -3,15 +3,15 @@
   "// comment 1": "versions here must match what's at the bottom of /manifest.yml",
 
   "v4.6.1": {
-    "url": "https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.0.0/artifacts/bundles/nsolid-bundle-v2.0.0-linux-x64/nsolid-v2.0.0-argon-linux-x64.tar.gz",
+    "url": "https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.0.1/artifacts/bundles/nsolid-bundle-v2.0.1-linux-x64/nsolid-v2.0.1-argon-linux-x64.tar.gz",
     "lts": "argon",
-    "nsolid": "2.0.0"
+    "nsolid": "2.0.1"
   },
 
   "v6.9.1": {
-    "url": "https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.0.0/artifacts/bundles/nsolid-bundle-v2.0.0-linux-x64/nsolid-v2.0.0-boron-linux-x64.tar.gz",
+    "url": "https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.0.1/artifacts/bundles/nsolid-bundle-v2.0.1-linux-x64/nsolid-v2.0.1-boron-linux-x64.tar.gz",
     "lts": "boron",
-    "nsolid": "2.0.0"
+    "nsolid": "2.0.1"
   },
 
   "// comment end": "comment so we don't have to end a property value without a trailing comma"
