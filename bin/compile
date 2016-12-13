@@ -77,26 +77,12 @@ list_node_config | output "$LOG_FILE"
 
 install_bins() {
   local node_engine=$(read_json "$BUILD_DIR/package.json" ".engines.node")
-  local iojs_engine=$(read_json "$BUILD_DIR/package.json" ".engines.iojs")
-  local npm_engine=$(read_json "$BUILD_DIR/package.json" ".engines.npm")
 
-  if [ -n "$iojs_engine" ]; then
-    echo "engines.iojs (package.json):  $iojs_engine (iojs)"
-  else
-    echo "engines.node (package.json):  ${node_engine:-unspecified}"
-  fi
-  echo "engines.npm (package.json):   ${npm_engine:-unspecified (use default)}"
+  echo "engines.node (package.json):  ${node_engine:-unspecified}"
   echo ""
 
-  if [ -n "$iojs_engine" ]; then
-    warn_node_engine "$iojs_engine"
-    install_iojs "$iojs_engine" "$BUILD_DIR/.heroku/node"
-    echo "Using bundled npm version for iojs compatibility: `npm --version`"
-  else
-    warn_node_engine "$node_engine"
-    install_nodejs "$node_engine" "$BUILD_DIR/.heroku/node"
-    install_npm "$npm_engine" "$BUILD_DIR/.heroku/node"
-  fi
+  warn_node_engine "$node_engine"
+  install_nodejs "$node_engine" "$BUILD_DIR/.heroku/node" "$BUILD_DIR"
 }
 
 header "Installing binaries"

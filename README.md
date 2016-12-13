@@ -258,13 +258,23 @@ This buildpack can be installed as a system-available buildpack, using the
 same technique as the Cloud Foundry Node.js buildpack, if your have admin
 access to your Cloud Foundry instance.
 
-* package the buildpack into the buildpack archive `nsolid_buildpack-vX.Y.Z.zip`:
+* package the buildpack into the buildpack archives
 
-      BUNDLE_GEMFILE=cf.Gemfile bundle exec buildpack-packager --uncached
+      lib/vendor/nsolid/tools/build-buildpack-zip.sh
+
+* the `bundled` version of the buildpack zip archive includes the N|Solid
+  Runtimes and headers for use with `node-gyp`; the version without `bundled` in
+  it's name will download the N|Solid Runtimes and headers from their
+  distribution site on the web.
+
+  * `nsolid_buildpack-vX.Y.Z.zip`
+  * `nsolid_buildpack-bundled-vX.Y.Z.zip`
 
 * install the buildpack archive in Cloud Foundry:
 
       cf create-buildpack nsolid_buildpack nsolid_buildpack-vX.Y.Z.zip 100
+        or
+      cf create-buildpack nsolid_buildpack nsolid_buildpack-bundled-vX.Y.Z.zip 100
 
 As this buildpack will match the same applications as the Cloud Foundry Node.js
 buildpack, you can choose which to use by default, by changing the position
@@ -272,8 +282,6 @@ parameter in the `cf create-buildpack` and `cf update-buildpack` commands.
 To use the non-default buildpack, specify it explicitly in your `manifest.yml`
 or on the `cf push` command line invocation.
 
-This buildpack does not currently support creating a "bundled" version of
-itself.
 
 
 Authors and Contributors
