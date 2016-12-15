@@ -1,0 +1,8 @@
+{
+  "name": "test-buildpack",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "~4.14.0",
+    "buffertools": "~2.1.2"
+  }
+}

@@ -3,6 +3,6 @@
 .idea
 tmp
 log/
-/nodejs_buildpack-*.zip
-/nsolid_buildpack-*.zip
+buildpacks
+dependencies
 .bundle

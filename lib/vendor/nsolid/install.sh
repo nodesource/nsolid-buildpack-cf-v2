@@ -16,40 +16,36 @@ init_nsolid() {
   chmod +x $BUILD_DIR/.nsolid-bin/cf
 
   mkdir -p $BUILD_DIR/.profile.d
-  cp $SCRIPT_PATH/bins/nsolid-setup.sh $BUILD_DIR/.profile.d
+  cp $SCRIPT_PATH/bins/profile.d.nsolid.sh $BUILD_DIR/.profile.d/nsolid.sh
 }
 
 init_nsolid $1
 
-# install the appropriate version of the N|Solid Runtime
-install_nsolid() {
-  # incoming version parm is the Node.js base LTS version; eg, 4.0.0 or 6.0.0
-  local NODE_VERSION="$1"
-  local INSTALL_DIR="$2"
-  local BUILD_DIR="$3"
-  local SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-  local PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd ../../.. && pwd )"
-  local VERSION_NSOLID=`cat $PROJECT_PATH/VERSION.nsolid`
-  local VERSION_LTS="argon"
-  local VERSION_NODEX="4.x"
+# override of /lib/binaries.sh::install_nodejs()
+install_nodejs() {
+  local requestedVersion="$1"
+  local installNodeDir="$2"
+  local installDir="$3"
 
-  if [ "$NODE_VERSION" == "6.0.0" ];
-  then
-    VERSION_LTS="boron"
-    VERSION_NODEX="6.x"
-  fi
+  local projectPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd ../../.. && pwd )"
 
-  echo "N|Solid version $VERSION_NSOLID / $VERSION_LTS (equivalent Node.js version $VERSION_NODEX)" | output "$LOG_FILE"
+  # sets the following local vars:
+  #   local VERSION_LTS="boron"
+  #   local VERSION_NODE="6.9.2"
+  #   local VERSION_NSOLID="2.1.0"
+  #   local NSOLID_URL="https:..."
+  #   local HEADER_URL="https:..."
+  #   local NSOLID_TARBALL="nsolid-2.1.0-boron.tar.gz"
+  #   local HEADER_TARBALL="nsolid-headers-2.1.0-boron.tar.gz"
 
-  local NSOLID_URL="https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/$VERSION_NSOLID/artifacts/bundles/nsolid-bundle-v$VERSION_NSOLID-linux-x64/nsolid-v$VERSION_NSOLID-$VERSION_LTS-linux-x64.tar.gz"
-  local HEADER_URL="https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/$VERSION_NSOLID/artifacts/headers/$VERSION_LTS/v$VERSION_NSOLID/nsolid-v$VERSION_NSOLID-headers.tar.gz"
+  eval `$projectPath/bin/node $projectPath/lib/vendor/nsolid/tools/resolve-version.js "$1"`
 
-  local NSOLID_TARBALL="nsolid-$VERSION_NSOLID-$VERSION_LTS.tar.gz"
-  local BUNDLE_NSOLID_TARBALL="$PROJECT_PATH/dependencies/$NSOLID_TARBALL"
+  echo "N|Solid version $VERSION_NSOLID / $VERSION_LTS (equivalent Node.js version $VERSION_NODE)" | output "$LOG_FILE"
+
+  local BUNDLE_NSOLID_TARBALL="$projectPath/dependencies/$NSOLID_TARBALL"
   local CACHED_NSOLID_TARBALL="$CACHE_DIR/$NSOLID_TARBALL"
 
-  local HEADER_TARBALL="nsolid-headers-$VERSION_NSOLID-$VERSION_LTS.tar.gz"
-  local BUNDLE_HEADER_TARBALL="$PROJECT_PATH/dependencies/$HEADER_TARBALL"
+  local BUNDLE_HEADER_TARBALL="$projectPath/dependencies/$HEADER_TARBALL"
   local CACHED_HEADER_TARBALL="$CACHE_DIR/$HEADER_TARBALL"
 
   mkdir -p $CACHE_DIR
@@ -62,9 +58,7 @@ install_nsolid() {
       echo "Using cached N|Solid $VERSION_NSOLID/$VERSION_LTS" | output "$LOG_FILE"
     else
       echo "Downloading N|Solid $VERSION_NSOLID/$VERSION_LTS..." | output "$LOG_FILE"
-      echo "url: $NSOLID_URL" | output "$LOG_FILE"
       curl $NSOLID_URL --silent --fail --retry 5 --retry-max-time 15 -o $CACHED_NSOLID_TARBALL || (echo "Unable to download N|Solid $NSOLID_VERSION bundle; does it exist?" && false)
-      echo "Downloaded [$NSOLID_URL]" | output "$LOG_FILE"
     fi
   fi
 
@@ -72,9 +66,15 @@ install_nsolid() {
   mkdir -p /tmp/nsolid/
   rm -rf /tmp/nsolid/*
   tar xzf $CACHED_NSOLID_TARBALL -C /tmp/nsolid --strip-components 1
-  mkdir -p $INSTALL_DIR
-  mv /tmp/nsolid/* $INSTALL_DIR
-  chmod +x $INSTALL_DIR/bin/*
+  mkdir -p $installNodeDir
+  mv /tmp/nsolid/* $installNodeDir
+  chmod +x $installNodeDir/bin/*
+
+  # N|Solid 2.1.0 argon linux did not ship a linked `node` ...
+  if [[ ! -f "$installNodeDir/bin/node" ]]; then
+    cd "$installNodeDir/bin"
+    ln -s "./nsolid" "node"
+  fi
 
   if [ -e $BUNDLE_HEADER_TARBALL ]; then
     echo "Using bundled N|Solid headers $VERSION_NSOLID/$VERSION_LTS" | output "$LOG_FILE"
@@ -84,16 +84,12 @@ install_nsolid() {
       echo "Using cached N|Solid headers $VERSION_NSOLID/$VERSION_LTS" | output "$LOG_FILE"
     else
       echo "Downloading N|Solid headers $VERSION_NSOLID/$VERSION_LTS..." | output "$LOG_FILE"
-      echo "url: $HEADER_URL" | output "$LOG_FILE"
       curl $HEADER_URL --silent --fail --retry 5 --retry-max-time 15 -o $CACHED_HEADER_TARBALL || (echo "Unable to download N|Solid $NSOLID_VERSION bundle; does it exist?" && false)
-      echo "Downloaded [$HEADER_URL]" | output "$LOG_FILE"
     fi
   fi
 
-  local NODEJS_VERSION=`$INSTALL_DIR/bin/nsolid -v | cut -c 2-`
-
-  local HEADERS_DIR="$BUILD_DIR/.node-gyp/$NODEJS_VERSION"
-  echo "Extracting headers `basename $CACHED_HEADER_TARBALL` to ~/.node-gyp/$NODEJS_VERSION" | output "$LOG_FILE"
+  local HEADERS_DIR="$installDir/.node-gyp/nsolid-$VERSION_NODE"
+  echo "Extracting headers `basename $CACHED_HEADER_TARBALL` to ~/.node-gyp/nsolid-$VERSION_NODE" | output "$LOG_FILE"
   mkdir -p $HEADERS_DIR
   rm -rf $HEADERS_DIR/*
   tar xzf $CACHED_HEADER_TARBALL -C $HEADERS_DIR --strip-components 1

@@ -1,21 +1,52 @@
 ---
 language: nsolid
+
+# dependencies-start
 default_versions:
 - name: node
-  version: 6.0.0
+  version: 6.9.2
+- name: node-headers
+  version: 6.9.2
+
 dependencies:
 - name: node
-  version: 4.0.0                         # LTS line: argon
-  uri: https://example.com/4.0.0         # uri not used
-  md5: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  # md5 not used
+  lts: boron
+  nsolid: 2.1.0
+  version: 6.9.2
+  uri: https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.1.0/artifacts/bundles/nsolid-bundle-v2.1.0-linux-x64/nsolid-v2.1.0-boron-linux-x64.tar.gz
+  md5: b04b48fdfddb677758fc3735d047301b
+  file: nsolid-2.1.0-boron.tar.gz
+  cf_stacks:
+  - cflinuxfs2
+- name: node-headers
+  lts: boron
+  nsolid: 2.1.0
+  version: 6.9.2
+  uri: https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.1.0/artifacts/headers/boron/v2.1.0/nsolid-v2.1.0-headers.tar.gz
+  file: nsolid-headers-2.1.0-boron.tar.gz
+  md5: 2e3dbedac1e96a8553b79b26b4faf1ff
   cf_stacks:
   - cflinuxfs2
 - name: node
-  version: 6.0.0                         # LTS line: boron
-  uri: https://example.com/6.0.0         # uri not used
-  md5: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  # md5 not used
+  lts: argon
+  nsolid: 2.1.0
+  version: 4.7.0
+  uri: https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.1.0/artifacts/bundles/nsolid-bundle-v2.1.0-linux-x64/nsolid-v2.1.0-argon-linux-x64.tar.gz
+  md5: 76084f95a95ac2d78ae17881930953ef
+  file: nsolid-2.1.0-argon.tar.gz
   cf_stacks:
   - cflinuxfs2
+- name: node-headers
+  lts: argon
+  nsolid: 2.1.0
+  version: 4.7.0
+  uri: https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.1.0/artifacts/headers/argon/v2.1.0/nsolid-v2.1.0-headers.tar.gz
+  file: nsolid-headers-2.1.0-argon.tar.gz
+  md5: e23760ff8112fd53e418132c91b7bc3f
+  cf_stacks:
+  - cflinuxfs2
+# dependencies-end
+
 url_to_dependency_map:
 - match: nsolid-v(\d+\.\d+\.\d+)
   name: nsolid

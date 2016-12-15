@@ -12,9 +12,18 @@ Additionally:
 
 * every release should test using all LTS releases; eg, argon and boron
 
+* VERSION.nsolid is the version of the N|Solid used with this buildpack
+
 * VERSION.cf-nodejs-buildpack is the version of the Node.js buildpack this
   was based on; when updating content based on Cloud Foundry Node.js
   buildpack changes, update this file.
+
+* manifest.yml should include the versions of Node.js supported by this version
+  of the version of N|Solid used.
+
+To build new .zip files for the unbundled and bundled buildpacks, use:
+
+    ./build-buildpack-zip.sh
 
 
 Differences from the Cloud Foundry Buildpack for Node.js
@@ -42,3 +51,12 @@ version 1.5.22, are:
 - one line modification to `bin/compile`, to add nsolid bits
 - one line mod to `lib/binaries.sh`, to add nsolid bits
 - everything in `lib/vendor/nsolid` is new
+
+
+Additional changes since first port:
+
+- `manifest.yml` isn't used much; basically just to indicate the versions of
+  Node.js supported by the version of N|Solid shipped
+
+- no longer using the Ruby buildpack builder, but `./build-buildpack-zip.sh`
+  instead

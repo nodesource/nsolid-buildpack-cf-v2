@@ -1,0 +1,27 @@
+{
+  "defaultVersion": "6.9.2",
+  "versionList": [
+    "6.9.2",
+    "4.7.0"
+  ],
+  "versions": {
+    "6.9.2": {
+      "ltsVersion": "boron",
+      "nodeVersion": "6.9.2",
+      "nsolidVersion": "2.1.0",
+      "tarballURL": "https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.1.0/artifacts/bundles/nsolid-bundle-v2.1.0-linux-x64/nsolid-v2.1.0-boron-linux-x64.tar.gz",
+      "tarballFile": "nsolid-2.1.0-boron.tar.gz",
+      "headersURL": "https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.1.0/artifacts/headers/boron/v2.1.0/nsolid-v2.1.0-headers.tar.gz",
+      "headersFile": "nsolid-headers-2.1.0-boron.tar.gz"
+    },
+    "4.7.0": {
+      "ltsVersion": "argon",
+      "nodeVersion": "4.7.0",
+      "nsolidVersion": "2.1.0",
+      "tarballURL": "https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.1.0/artifacts/bundles/nsolid-bundle-v2.1.0-linux-x64/nsolid-v2.1.0-argon-linux-x64.tar.gz",
+      "tarballFile": "nsolid-2.1.0-argon.tar.gz",
+      "headersURL": "https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/2.1.0/artifacts/headers/argon/v2.1.0/nsolid-v2.1.0-headers.tar.gz",
+      "headersFile": "nsolid-headers-2.1.0-argon.tar.gz"
+    }
+  }
+}
