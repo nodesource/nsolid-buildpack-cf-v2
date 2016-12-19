@@ -1,5 +1,0 @@
----
-applications:
-- name:      test-buildpack
-  buildpack: %BUILDPACK%
-  memory:    128M

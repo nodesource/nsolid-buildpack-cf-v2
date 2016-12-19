@@ -27,26 +27,13 @@ install_nodejs() {
   local installNodeDir="$2"
   local installDir="$3"
 
-  local projectPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd ../../.. && pwd )"
+  local buildpackDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd ../../.. && pwd )"
+  local ltsVersionScript="$buildpackDir/bin/node lib/vendor/nsolid/tools/resolve-version.js"
 
-  # sets the following local vars:
-  #   local VERSION_LTS="boron"
-  #   local VERSION_NODE="6.9.2"
-  #   local VERSION_NSOLID="2.1.0"
-  #   local NSOLID_URL="https:..."
-  #   local HEADER_URL="https:..."
-  #   local NSOLID_TARBALL="nsolid-2.1.0-boron.tar.gz"
-  #   local HEADER_TARBALL="nsolid-headers-2.1.0-boron.tar.gz"
-
-  eval `$projectPath/bin/node $projectPath/lib/vendor/nsolid/tools/resolve-version.js "$1"`
+  # ltsVersionScript writes bash commands out, that will be executed below
+  local ltsVersion=`$buildpackDir/bin/node $ltsVersionScript "$requestedVersion" "$buildpackDir"`
 
   echo "N|Solid version $VERSION_NSOLID / $VERSION_LTS (equivalent Node.js version $VERSION_NODE)" | output "$LOG_FILE"
-
-  local BUNDLE_NSOLID_TARBALL="$projectPath/dependencies/$NSOLID_TARBALL"
-  local CACHED_NSOLID_TARBALL="$CACHE_DIR/$NSOLID_TARBALL"
-
-  local BUNDLE_HEADER_TARBALL="$projectPath/dependencies/$HEADER_TARBALL"
-  local CACHED_HEADER_TARBALL="$CACHE_DIR/$HEADER_TARBALL"
 
   mkdir -p $CACHE_DIR
 
@@ -66,13 +53,13 @@ install_nodejs() {
   mkdir -p /tmp/nsolid/
   rm -rf /tmp/nsolid/*
   tar xzf $CACHED_NSOLID_TARBALL -C /tmp/nsolid --strip-components 1
-  mkdir -p $installNodeDir
-  mv /tmp/nsolid/* $installNodeDir
-  chmod +x $installNodeDir/bin/*
+  mkdir -p $INSTALL_DIR
+  mv /tmp/nsolid/* $INSTALL_DIR
+  chmod +x $INSTALL_DIR/bin/*
 
   # N|Solid 2.1.0 argon linux did not ship a linked `node` ...
-  if [[ ! -f "$installNodeDir/bin/node" ]]; then
-    cd "$installNodeDir/bin"
+  if [[ ! -f "$INSTALL_DIR/bin/node" ]]; then
+    cd "$INSTALL_DIR/bin"
     ln -s "./nsolid" "node"
   fi
 
@@ -88,7 +75,7 @@ install_nodejs() {
     fi
   fi
 
-  local HEADERS_DIR="$installDir/.node-gyp/nsolid-$VERSION_NODE"
+  local HEADERS_DIR="$BUILD_DIR/.node-gyp/nsolid-$VERSION_NODE"
   echo "Extracting headers `basename $CACHED_HEADER_TARBALL` to ~/.node-gyp/nsolid-$VERSION_NODE" | output "$LOG_FILE"
   mkdir -p $HEADERS_DIR
   rm -rf $HEADERS_DIR/*
