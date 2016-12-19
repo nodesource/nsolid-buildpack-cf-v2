@@ -76,6 +76,14 @@ install_nsolid() {
   mv /tmp/nsolid/* $INSTALL_DIR
   chmod +x $INSTALL_DIR/bin/*
 
+  # if for some reason did not ship a linked `node`, add one
+  if [[ ! -f "$INSTALL_DIR/bin/node" ]]; then
+    local ORIG_DIR=`pwd`
+    cd "$INSTALL_DIR/bin"
+    ln -s "./nsolid" "node"
+    cd "$ORIG_DIR"
+  fi
+
   if [ -e $BUNDLE_HEADER_TARBALL ]; then
     echo "Using bundled N|Solid headers $VERSION_NSOLID/$VERSION_LTS" | output "$LOG_FILE"
     cp $BUNDLE_HEADER_TARBALL $CACHED_HEADER_TARBALL
@@ -92,8 +100,8 @@ install_nsolid() {
 
   local NODEJS_VERSION=`$INSTALL_DIR/bin/nsolid -v | cut -c 2-`
 
-  local HEADERS_DIR="$BUILD_DIR/.node-gyp/$NODEJS_VERSION"
-  echo "Extracting headers `basename $CACHED_HEADER_TARBALL` to ~/.node-gyp/$NODEJS_VERSION" | output "$LOG_FILE"
+  local HEADERS_DIR="$BUILD_DIR/.node-gyp/nsolid-$NODEJS_VERSION"
+  echo "Extracting headers `basename $CACHED_HEADER_TARBALL` to ~/.node-gyp/nsolid-$NODEJS_VERSION" | output "$LOG_FILE"
   mkdir -p $HEADERS_DIR
   rm -rf $HEADERS_DIR/*
   tar xzf $CACHED_HEADER_TARBALL -C $HEADERS_DIR --strip-components 1
