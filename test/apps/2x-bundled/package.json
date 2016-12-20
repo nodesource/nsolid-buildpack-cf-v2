@@ -1,0 +1,9 @@
+{
+  "name": "test-buildpack",
+  "version": "1.0.0",
+  "engines" : {
+    "node" : "2.x"
+  },
+  "dependencies": {
+  }
+}

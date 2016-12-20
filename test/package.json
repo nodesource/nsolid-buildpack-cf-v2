@@ -1,0 +1,13 @@
+{
+  "name": "nsolid-buildpack-cf-test",
+  "scripts": {
+    "standard": "standard",
+    "test": "standard && ./test-apps-run.sh && npm run -s verify",
+    "verify": "node test-apps-verify.js | tap-spec"
+  },
+  "devDependencies": {
+    "standard": "~8.6.0",
+    "tap-spec": "~4.1.1",
+    "tape": "~4.6.3"
+  }
+}

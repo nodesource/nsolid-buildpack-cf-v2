@@ -1,0 +1,5 @@
+---
+applications:
+- name:      test-buildpack
+  buildpack: test_nsolid_buildpack
+  memory:    128M
