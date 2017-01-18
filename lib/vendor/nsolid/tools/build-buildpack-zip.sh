@@ -18,7 +18,11 @@ download_nsolid() {
   local BUNDLE_NSOLID_TARBALL="$dir/$NSOLID_TARBALL"
 
   echo downloading $NSOLID_URL
-  curl $NSOLID_URL --silent --fail --retry 5 --retry-max-time 15 -o $BUNDLE_NSOLID_TARBALL || (echo "Unable to download $NSOLID_URL ; does it exist?" && false)
+  curl $NSOLID_URL --silent --fail --retry 5 --retry-max-time 15 -o $BUNDLE_NSOLID_TARBALL
+  if [ $? -ne 0 ]; then
+    echo "wops ... unable to download file, does it exist?"
+    exit 1
+  fi
 }
 
 download_headers() {
@@ -31,7 +35,11 @@ download_headers() {
   local BUNDLE_HEADER_TARBALL="$dir/$HEADER_TARBALL"
 
   echo downloading $HEADER_URL
-  curl $HEADER_URL --silent --fail --retry 5 --retry-max-time 15 -o $BUNDLE_HEADER_TARBALL || (echo "Unable to download $HEADER_URL ; does it exist?" && false)
+  curl $HEADER_URL --silent --fail --retry 5 --retry-max-time 15 -o $BUNDLE_HEADER_TARBALL
+  if [ $? -ne 0 ]; then
+    echo "wops ... unable to download file, does it exist?"
+    exit 1
+  fi
 }
 
 echo 'running standard ...'

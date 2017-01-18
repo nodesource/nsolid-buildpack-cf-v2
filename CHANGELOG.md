@@ -1,3 +1,10 @@
+v1.0.4 2017-01-18
+================================================================================
+
+* updated to N|Solid 2.1.1
+* changed `lib/vendor/nsolid/tools/build-buildpack-zip.sh` to exit early if
+  requested runtime binary is not available
+
 v1.0.3 2016-12-19
 ================================================================================
 
