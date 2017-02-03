@@ -1,3 +1,10 @@
+v1.0.5 2017-02-03
+================================================================================
+
+* updated to N|Solid 2.1.2
+* deleted `lib/vendor/nsolid/nsolid-versions.json` since it's no longer
+  needed and thus confusing to have around
+
 v1.0.4 2017-01-18
 ================================================================================
 

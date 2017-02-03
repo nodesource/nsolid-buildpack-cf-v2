@@ -17,6 +17,31 @@ Additionally:
   buildpack changes, update this file.
 
 
+Cutting a new release
+================================================================================
+
+Updates needed for every release - in theory, only source changes required:
+
+* update the `VERSION` file to the version number of the buildpack
+* update the `VERSION.nsolid` file to the version number of N|Solid
+* update the `CHANGELOG.md` file
+
+To rebuild/test the buildpacks in context of those changes:
+
+* run `lib/vendor/nsolid/tools/build-buildpack-zip.sh` to build the buildpack
+  archives
+* run `test/test-apps-run.sh` to run tests against those buildpacks
+* run `test/test-apps-verify.sh` to verify the results of those tests
+
+When everything's ready to go:
+
+* merge to master
+* tag commit with version number
+* upload bundled and unbundled zipped buildpacks to [GH release page][]
+
+[GH release page]: https://github.com/nodesource/nsolid-buildpack-cf/releases
+
+
 Differences from the Cloud Foundry Buildpack for Node.js
 ================================================================================
 
