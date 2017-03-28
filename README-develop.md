@@ -31,7 +31,10 @@ To rebuild/test the buildpacks in context of those changes:
 * run `lib/vendor/nsolid/tools/build-buildpack-zip.sh` to build the buildpack
   archives
 * run `test/test-apps-run.sh` to run tests against those buildpacks
-* run `test/test-apps-verify.sh` to verify the results of those tests
+  * note the tests run against a local, default install of [PCFdev][]
+* run `test/test-apps-verify.js` to verify the results of those tests
+
+[PCFdev]: https://github.com/pivotal-cf/pcfdev
 
 When everything's ready to go:
 

@@ -1,3 +1,12 @@
+v1.0.6 2017-03-28
+================================================================================
+
+* updated to N|Solid 2.1.3
+* fixed version resolver so that only engines/node ranges that match 4.x will
+  return 4.x, others will return 6.x; previously used version of that rule
+  where 4.x and 6.x were switched
+* added tests for package.json files with no and "*" engines/node values
+
 v1.0.5 2017-02-03
 ================================================================================
 
