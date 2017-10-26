@@ -39,6 +39,12 @@ install_nsolid() {
     VERSION_NODEX="6.x"
   fi
 
+  if [ "$NODE_VERSION" == "8.0.0" ];
+  then
+    VERSION_LTS="carbon"
+    VERSION_NODEX="8.x"
+  fi
+
   echo "N|Solid version $VERSION_NSOLID / $VERSION_LTS (equivalent Node.js version $VERSION_NODEX)" | output "$LOG_FILE"
 
   local NSOLID_URL="https://s3-us-west-2.amazonaws.com/nodesource-public-downloads/$VERSION_NSOLID/artifacts/bundles/nsolid-bundle-v$VERSION_NSOLID-linux-x64/nsolid-v$VERSION_NSOLID-$VERSION_LTS-linux-x64.tar.gz"

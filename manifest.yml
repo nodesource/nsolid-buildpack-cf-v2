@@ -16,6 +16,12 @@ dependencies:
   md5: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  # md5 not used
   cf_stacks:
   - cflinuxfs2
+- name: node
+  version: 8.0.0                         # LTS line: carbon
+  uri: https://example.com/8.0.0         # uri not used
+  md5: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  # md5 not used
+  cf_stacks:
+  - cflinuxfs2
 url_to_dependency_map:
 - match: nsolid-v(\d+\.\d+\.\d+)
   name: nsolid

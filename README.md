@@ -73,8 +73,13 @@ Selecting the version of Node.js to use
 ================================================================================
 
 The buildpack currently only supports versions of the N|Solid Runtime
-corresponding to LTS releases of Node.js - currently the 4.x (Argon) and 6.x
-(Boron) lines.  If your app will not run on these releases of Node.js, then this
+corresponding to LTS releases of Node.js - currently:
+
+- 4.x (Argon)
+- 6.x (Boron)
+- 8.x (Carbon)
+
+If your app will not run on these releases of Node.js, then this
 buildpack cannot be used with your app.
 
 You can select which of N|Solid Runtime to use, by setting the `engines`

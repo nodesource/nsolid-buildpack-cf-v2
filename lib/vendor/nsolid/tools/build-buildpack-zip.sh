@@ -60,9 +60,11 @@ rm -rf   $PROJECT_DIR/dependencies/*
 
 download_nsolid "$VERSION_NSOLID" "argon" "$PROJECT_DIR/dependencies"
 download_nsolid "$VERSION_NSOLID" "boron" "$PROJECT_DIR/dependencies"
+download_nsolid "$VERSION_NSOLID" "carbon" "$PROJECT_DIR/dependencies"
 
 download_headers "$VERSION_NSOLID" "argon" "$PROJECT_DIR/dependencies"
 download_headers "$VERSION_NSOLID" "boron" "$PROJECT_DIR/dependencies"
+download_headers "$VERSION_NSOLID" "carbon" "$PROJECT_DIR/dependencies"
 
 echo "building bundled buildpack $BUILDPACK_NAME"
 BUNDLE_GEMFILE=cf.Gemfile bundle exec buildpack-packager --uncached

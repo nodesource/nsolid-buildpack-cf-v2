@@ -10,7 +10,7 @@ That means:
 
 Additionally:
 
-* every release should test using all LTS releases; eg, argon and boron
+* every release should test using all LTS releases; eg, argon, boron, carbon
 
 * VERSION.cf-nodejs-buildpack is the version of the Node.js buildpack this
   was based on; when updating content based on Cloud Foundry Node.js
