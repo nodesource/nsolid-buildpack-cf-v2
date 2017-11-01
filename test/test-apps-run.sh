@@ -70,6 +70,12 @@ function main() {
   fi
 
   cd "$PROJECT_DIR"
+
+  echo ""
+  echo "-----------------------------------------------------------------------"
+  echo "checking test results (running test/test-apps-verify.js)"
+  echo "-----------------------------------------------------------------------"
+  node test/test-apps-verify.js
 }
 
 function runTest() {
