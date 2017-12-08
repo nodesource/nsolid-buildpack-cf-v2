@@ -1,5 +1,10 @@
-N|Solid Cloud Foundry Buildpack
+N|Solid v2 Cloud Foundry Buildpack
 ================================================================================
+
+**Note: this buildpack is for N|Solid version 2.  The buildpack for N|Solid
+version 3 is available at a separate repository:
+https://github.com/nodesource/nsolid-buildpack-cf-v3
+**
 
 This buildpack is compatible with the existing Cloud Foundry Node.js buildpack,
 but runs the application using the N|Solid Runtime instead of the open source
@@ -157,7 +162,7 @@ directions available at the [N|Solid documentation site][].
 
 To use N|Solid Storage and N|Solid Console as Cloud Foundry apps, please
 follow the directions available in the
-[nsolid-cf GitHub repo](https://github.com/nodesource/nsolid-cf).
+[nsolid-cf-v2 GitHub repo](https://github.com/nodesource/nsolid-cf-v2).
 
 
 user-provided service `nsolid-storage`
